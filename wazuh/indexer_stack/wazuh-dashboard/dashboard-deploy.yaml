@@ -35,7 +35,7 @@ spec:
             secretName: dashboard-certs
       containers:
         - name: wazuh-dashboard
-          image: 'wazuh/wazuh-dashboard:4.9.1'
+          image: "wazuh/wazuh-dashboard:4.9.1"
           resources:
             limits:
               cpu: 500m
@@ -55,14 +55,14 @@ spec:
               subPath: tls.key
             - name: trust-bundle
               mountPath: /usr/share/wazuh-dashboard/certs/root-ca.pem
-              subPath: root-certs.pem
+              subPath: root-ca.pem
               readOnly: true
           ports:
             - containerPort: 5601
               name: dashboard
           env:
             - name: INDEXER_URL
-              value: 'https://indexer:9200'
+              value: "https://indexer:9200"
             - name: INDEXER_USERNAME
               valueFrom:
                 secretKeyRef:
