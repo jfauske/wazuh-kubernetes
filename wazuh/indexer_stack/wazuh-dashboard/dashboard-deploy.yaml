@@ -27,15 +27,12 @@ spec:
         - name: config
           configMap:
             name: dashboard-conf
-        - name: trust-bundle
-          configMap:
-            name: trust-bundle
         - name: dashboard-certs
           secret:
             secretName: dashboard-certs
       containers:
         - name: wazuh-dashboard
-          image: "wazuh/wazuh-dashboard:4.9.1"
+          image: 'wazuh/wazuh-dashboard:4.9.1'
           resources:
             limits:
               cpu: 500m
@@ -48,12 +45,12 @@ spec:
             - name: dashboard-certs
               mountPath: /usr/share/wazuh-dashboard/certs/cert.pem
               readOnly: true
-              subPath: tls.crt
+              subPath: cert.pem
             - name: dashboard-certs
               mountPath: /usr/share/wazuh-dashboard/certs/key.pem
               readOnly: true
-              subPath: tls.key
-            - name: trust-bundle
+              subPath: key.pem
+            - name: dashboard-certs
               mountPath: /usr/share/wazuh-dashboard/certs/root-ca.pem
               subPath: root-ca.pem
               readOnly: true
@@ -62,7 +59,7 @@ spec:
               name: dashboard
           env:
             - name: INDEXER_URL
-              value: "https://indexer:9200"
+              value: 'https://indexer:9200'
             - name: INDEXER_USERNAME
               valueFrom:
                 secretKeyRef:
