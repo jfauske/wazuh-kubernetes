@@ -27,6 +27,9 @@ spec:
         - name: config
           configMap:
             name: dashboard-conf
+        - name: trust-bundle
+          configMap:
+            name: trust-bundle
         - name: dashboard-certs
           secret:
             secretName: dashboard-certs
@@ -45,14 +48,14 @@ spec:
             - name: dashboard-certs
               mountPath: /usr/share/wazuh-dashboard/certs/cert.pem
               readOnly: true
-              subPath: cert.pem
+              subPath: tls.crt
             - name: dashboard-certs
               mountPath: /usr/share/wazuh-dashboard/certs/key.pem
               readOnly: true
-              subPath: key.pem
-            - name: dashboard-certs
+              subPath: tls.key
+            - name: trust-bundle
               mountPath: /usr/share/wazuh-dashboard/certs/root-ca.pem
-              subPath: root-ca.pem
+              subPath: root-certs.pem
               readOnly: true
           ports:
             - containerPort: 5601

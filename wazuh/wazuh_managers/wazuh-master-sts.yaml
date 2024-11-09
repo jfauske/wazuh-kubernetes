@@ -31,9 +31,12 @@ spec:
         - name: config
           configMap:
             name: wazuh-conf
+        - name: trust-bundle
+          configMap:
+            name: trust-bundle
         - name: filebeat-certs
           secret:
-            secretName: indexer-certs
+            secretName: wazuh-filebeat-cert
         - name: wazuh-authd-pass
           secret:
             secretName: wazuh-authd-pass
@@ -54,17 +57,17 @@ spec:
               mountPath: /wazuh-config-mount/etc/ossec.conf
               subPath: master.conf
               readOnly: true
-            - name: filebeat-certs
+            - name: trust-bundle
               mountPath: /etc/ssl/root-ca.pem
               readOnly: true
-              subPath: root-ca.pem
+              subPath: root-certs.pem
             - name: filebeat-certs
               mountPath: /etc/ssl/filebeat.pem
-              subPath: filebeat.pem
+              subPath: tls.crt
               readOnly: true
             - name: filebeat-certs
               mountPath: /etc/ssl/filebeat.key
-              subPath: filebeat-key.pem
+              subPath: tls.key
               readOnly: true
             - name: wazuh-authd-pass
               mountPath: /wazuh-config-mount/etc/authd.pass
